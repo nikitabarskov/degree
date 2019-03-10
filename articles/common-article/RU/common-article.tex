@@ -3,10 +3,9 @@
 \usepackage{extsizes}
 \usepackage[left=3cm,right=1.5cm,top=1.25cm,bottom=2cm]{geometry}
 
+\usepackage[T2A]{fontenc}
 \usepackage[english,russian]{babel}
-\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-%\usepackage{fontspec}
 
 \usepackage{ragged2e}
 \usepackage{microtype}
@@ -19,20 +18,7 @@
 
 \usepackage{calc}
 
-%\setmainfont{Helvetica Neue}
-%\setmonofont{Fira Code}
-
 \usepackage{graphicx}
-
-\usepackage[tableposition=top]{caption}
-\usepackage{subcaption}
-\DeclareCaptionLabelFormat{gostfigure}{Рисунок #2}
-\DeclareCaptionLabelFormat{gosttable}{Таблица #2}
-\DeclareCaptionLabelSeparator{gost}{~---~}
-\captionsetup{labelsep=gost}
-\captionsetup[figure]{labelformat=gostfigure}
-\captionsetup[table]{labelformat=gosttable}
-\renewcommand{\thesubfigure}{\asbuk{subfigure}}
 
 \usepackage{amsmath}
 \usepackage{tabu}
@@ -41,15 +27,15 @@
 % Document
 \begin{document}
 
+    \chapter{Прогнозирование взаимодействий пользователей с рекламным содержимым интернет страниц}
     \section{Введение}
 
     В рамках данной работы был построен и оценен метод для прогнозирования поведения пользователей, рассмотрена
     структура решения, оценка качества прогноза.
 
-    Предложенный метод может быть использован при ограничении вычислительных возможностей рабочей станции, а также
-    для применения на малых выборках.
-    Предложенный алгоритм представляет собой комбинацию известных математических
-    техник для создания выборки, прогнозирования одномерных временных рядов и проведения калиборвки.
+    Предложенный метод может быть использован при ограничении вычислительных возможностей рабочей станции, 
+    а также для применения на малых выборках. Предложенный алгоритм представляет собой комбинацию 
+    известных математических техник для создания выборки, прогнозирования одномерных временных рядов и проведения калиборвки.
 
     В качестве исходных данных был использован набор данных, представляющий собой анонимизированную статистику
     взаимодействия пользователей.
@@ -61,7 +47,7 @@
     <Следом>> данных взаимодействий является собраная рекламным сервером информация, представляющая собой набор
     технических метаданных, куки данные пользователя и данные, собранные при помощи сторонних интеграций.
 
-    Каждое взаимодействие пользователя в момент времени $t_k$ можно представить в виде вектора $\mathbf{U_i}(\tau_k)$,
+    Каждое взаимодействие пользователя в момент времени $t_k$ можно представить в виде вектора $\mathbf{U_i}(t_k)$,
     элементами которого являются признаки пользователя (техническая информация, собранная рекламным сервером).
     \begin{equation}
         \mathbf{U_i}\left(t_k\right) =
@@ -91,7 +77,7 @@
     прогнозирование)
     \begin{equation}
         F\left( \mathbf{U_i}\left(t_k + h \right) \right)
-        = \mathbf{\widehat{U}_i}\left(t_k\right)
+        = \mathbf{U_i}\left(t_k\right)
     \end{equation}
     и метода калибровки выборки
     \begin{equation}
@@ -140,13 +126,12 @@
         \end{cases}, \forall i \in (0, M)
     \end{equation}
 
-    Метрика количества взаимодействий определяется на временном интервале $[T_0, T_1]$
+    Метрика количества взаимодействий определяется на временном интервале $\left[T_0, T_1\right]$
     \begin{equation}
         \text{Imps} \left( U, A, \left[ T_0, T_1 \right] \right) =
         \sum \limits_{t=T_0}^{T_1} \left. \text{Imps} \left( U_i (t) \right) \right\|_{u_i = U, u_j = A}
     \end{equation}
 
-    Визуализация
 
     \paragraph{Метрика количества взаимодействий уникальных пользователей.} Пусть дана выборка взаимодействий
     пользователей $\left\{\mathbf{U_i}\left(t_k\right)\right\}$ за период времени $[T_0, T_1]$,  $u_j$ -- признак
