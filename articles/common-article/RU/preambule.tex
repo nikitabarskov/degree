@@ -1,0 +1,45 @@
+% Page sizes and borders
+\usepackage{extsizes}
+\usepackage[left=3cm,right=1.5cm,top=1.25cm,bottom=2cm]{geometry}
+
+% Unicode for xelatex
+\usepackage{fontspec} % XeTeX
+\usepackage{xunicode}
+\setmainfont{Times}
+\setsansfont{Helvetica}
+\setmonofont{Fira Code}
+\defaultfontfeatures{Scale=MatchLowercase,Mapping=tex-text}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\newfontfamily\cyrillicfont{Times}
+
+% Listings of code with ligatures and coloring
+%% TODO Add coloring
+
+\usepackage{listings}
+\usepackage{lstfiracode}
+\lstset{
+  language=C++,
+  style=FiraCodeStyle,
+  basicstyle=\ttfamily
+}
+
+% 
+\usepackage{indentfirst}
+
+\usepackage{tabu}
+\usepackage{longtable}
+
+\usepackage{ragged2e}
+
+\usepackage{microtype}
+\sloppy             % Избавляемся от переполнений
+\hyphenpenalty=10000 % Частота переносов
+\clubpenalty=10000  % Запрещаем разрыв страницы после первой строки абзаца
+\widowpenalty=10000 % Запрещаем разрыв страницы после последней строки абзаца
+
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
