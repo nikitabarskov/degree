@@ -1,13 +1,28 @@
 % !TEX program = xelatex
 % !TEX encoding = UTF-8 Unicode
 
-\documentclass[a4paper, 14pt]{extreport}
+\documentclass[a4paper, 12pt]{extreport}
 \include{preambule}
+
+\pgfplotstableread[col sep = comma]{inc/csv/squid.csv}\algoforecastoneweek
+\pgfplotstableread[col sep = comma]{inc/csv/naive.csv}\naiveforecastoneweek
+\pgfplotstableread[col sep = comma]{inc/csv/naive_error.csv}\naiveforecasterroroneweek
+\pgfplotstableread[col sep = comma]{inc/csv/squid_error.csv}\algoforecasterroroneweek
+\pgfplotstableread[col sep = comma]{inc/csv/squid14.csv}\algoforecasttwoweek
+\pgfplotstableread[col sep = comma]{inc/csv/naive14.csv}\naiveforecasttwoweek
+\pgfplotstableread[col sep = comma]{inc/csv/naive_error14.csv}\naiveforecasterrortwoweek
+\pgfplotstableread[col sep = comma]{inc/csv/squid_error14.csv}\algoforecasterrortwoweek
+\pgfplotsset{compat=1.8}
+
 % Document
 \begin{document}
 
     \include{inc/sections/01-title-and-abstract}
+
     \include{inc/sections/02-introduction}
+
     \include{inc/sections/03-algorithm-and-metrics}
+
+    \include{inc/sections/04-computation-experiment}
 
 \end{document}

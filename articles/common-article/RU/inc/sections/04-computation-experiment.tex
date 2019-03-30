@@ -1,0 +1,255 @@
+\section{Результаты численного эксперимента}
+\subsection{Описание исходного набора данных}
+В качестве исходных данных для численного эксперимента был использован
+набор данных, представляющий собой анонимизированный трафик пользователей
+крупной сети сайтов. В представлена сводная характеристика используемых
+данных.
+\begin{longtabu} to \textwidth {|X|X|}
+    \caption{Описание исходных данных}
+    \label{tab:dataset-description}
+    \endhead
+    \rowfont[c]{\bfseries}
+    \hline
+    Параметр набора данных & Значение \\
+    \hline
+    Временной охват & 1 марта 2018 года --- 1 марта 2019 года \\
+    \hline
+    Число уникальных рекламных элементов & \\
+    \hline
+    Число уникальных пользователей & \\
+    \hline
+    Общее число взаимодействий & \\
+    \hline
+\end{longtabu}
+\subsection{Численный эксперимент}
+При оценке данного метода были проведены эксперименты по оценке качества прогноза 
+на различные временные промежутки.
+\subsubsection{Прогнозирование на 7 дней}
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth}    
+        \centering
+        \begin{tikzpicture}[font=\scriptsize]
+            \begin{axis}[
+                unit vector ratio*=1 1 1,
+                width=\linewidth,
+                xlabel=Предсказанное значение,
+                ylabel=Наблюдаемое значение,
+                legend style={
+                    at={(0.5,1.2)},
+                    anchor=south,
+                    nodes={right},
+                    font=\scriptsize\mystrut},
+                legend columns=2,
+                xmax=1e7,
+                ymin=-0.01,
+                xmin=-0.01,
+                ymax=1e7]
+            \addplot+[
+                only marks,
+                mark=*,
+                opacity=0.3]
+            table {\algoforecastoneweek};
+            \addplot+[
+                only marks,
+                mark=*,
+                opacity=0.3]
+            table {\naiveforecastoneweek};
+            \addplot[
+                transparent,
+                no markers,
+                name path=A,
+                domain=0:1e8
+            ]{1.1*x};
+            \addplot[
+                transparent,
+                no markers,
+                name path=B,
+                domain=0:1e8
+            ]{0.9*x};
+            \addplot [
+                blue,
+                area legend,
+                opacity=0.2,
+                ] fill between [
+                    of=A and B
+                ];
+            \addplot [
+                transparent,
+                no markers,
+                name path=C,
+                domain=0:1e8
+            ]{1.2   *x};
+            \addplot [
+                transparent,
+                no markers,
+                name path=D,
+                domain=0:1e8
+            ]{0.8*x};
+            \addplot [
+                blue,
+                area legend,
+                opacity=0.1,
+                ] fill between [
+                    of=C and D
+                ];
+            \legend{
+                Предложенный алгоритм,
+                Наивный подход,
+                ,
+                ,
+                Область ошибки $10\%$,
+                ,
+                ,
+                Область ошибки $20\%$,
+            };
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Диаграмма рассеяния прогноза}
+        \end{minipage} %    
+        \begin{minipage}{0.45\textwidth}
+        \centering
+            \begin{tikzpicture}[font=\footnotesize]
+                \begin{axis}[
+                    ybar,
+                    width=\linewidth,
+                    ylabel=Абсолютная ошибка,
+                    legend style={at={(0.5,1.2)},anchor=south},
+                    legend columns=2]
+                \addplot+[
+                    hist={
+                        bins=11,
+                        data min=-3e6,
+                        data max=3e6
+                    },
+                    opacity=0.5   
+                ] table [y index=0] {\algoforecasterroroneweek};
+                \addplot+[
+                    hist={
+                        bins=11,
+                        data min=-3e6,
+                        data max=3e6
+                    },
+                    opacity=0.5   
+                ] table [y index=0] {\naiveforecasterroroneweek};
+                \legend{Предложенный алгоритм, Наивный подход}
+                \end{axis}
+            \end{tikzpicture}
+            \caption{Абсолютной ошибка}
+        \end{minipage}
+\end{figure}
+\newpage
+\subsubsection{Прогнозирование на 14 дней}
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.45\textwidth}    
+        \centering
+        \begin{tikzpicture}[font=\scriptsize]
+            \begin{axis}[
+                unit vector ratio*=1 1 1,
+                width=\linewidth,
+                xlabel=Предсказанное значение,
+                ylabel=Наблюдаемое значение,
+                legend style={
+                    at={(0.5,1.2)},
+                    anchor=south,
+                    nodes={right},
+                    font=\scriptsize\mystrut},
+                legend columns=2,
+                xmax=1e7,
+                ymin=-0.01,
+                xmin=-0.01,
+                ymax=1e7]
+            \addplot+[
+                only marks,
+                mark=*,
+                opacity=0.3]
+            table {\algoforecasttwoweek};
+            \addplot+[
+                only marks,
+                mark=*,
+                opacity=0.3]
+            table {\naiveforecasttwoweek};
+            \addplot[
+                transparent,
+                no markers,
+                name path=A,
+                domain=0:1e8
+            ]{1.1*x};
+            \addplot[
+                transparent,
+                no markers,
+                name path=B,
+                domain=0:1e8
+            ]{0.9*x};
+            \addplot [
+                blue,
+                area legend,
+                opacity=0.2,
+                ] fill between [
+                    of=A and B
+                ];
+            \addplot [
+                transparent,
+                no markers,
+                name path=C,
+                domain=0:1e8
+            ]{1.2   *x};
+            \addplot [
+                transparent,
+                no markers,
+                name path=D,
+                domain=0:1e8
+            ]{0.8*x};
+            \addplot [
+                blue,
+                area legend,
+                opacity=0.1,
+                ] fill between [
+                    of=C and D
+                ];
+            \legend{
+                Предложенный алгоритм,
+                Наивный подход,
+                ,
+                ,
+                Область ошибки $10\%$,
+                ,
+                ,
+                Область ошибки $20\%$,
+            };
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Диаграмма рассеяния прогноза}
+        \end{minipage} %    
+        \begin{minipage}{0.45\textwidth}
+        \centering
+            \begin{tikzpicture}[font=\footnotesize]
+                \begin{axis}[
+                    ybar,
+                    width=\linewidth,
+                    ylabel=Абсолютная ошибка,
+                    legend style={at={(0.5,1.2)},anchor=south},
+                    legend columns=2]
+                \addplot+[
+                    hist={
+                        bins=11,
+                        data min=-2e6,
+                        data max=2e6
+                    },
+                    opacity=0.5   
+                ] table [y index=0] {\algoforecasterrortwoweek};
+                \addplot+[
+                    hist={
+                        bins=11,
+                        data min=-2e6,
+                        data max=2e6
+                    },
+                    opacity=0.5   
+                ] table [y index=0] {\naiveforecasterrortwoweek};
+                \legend{Предложенный алгоритм, Наивный подход}
+                \end{axis}
+            \end{tikzpicture}
+            \caption{Абсолютной ошибка}
+        \end{minipage}
+\end{figure}

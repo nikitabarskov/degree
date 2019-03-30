@@ -1,6 +1,5 @@
 *.aux
 *.toc
 *.synctex.gz
-*.pdf
 *.log
-**/__latexindent_temp.tex
+**/**/*_temp.*
