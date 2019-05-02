@@ -1,0 +1,20 @@
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.9\textwidth}    
+    \begin{tikzpicture}[font=\scriptsize]
+        \begin{axis}[
+            date coordinates in=x,
+            width=\textwidth,
+            height=0.3\textwidth,
+            xmin=2018-03-01,
+            xmax=2018-06-31,
+            xtick distance=15,
+            xlabel=Дата,
+            ylabel=$h(t)$]
+        \addplot+[no markers] table[x=date, y=holiday,] {\timeseriesdecompose};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Временной ряд функции внешних событий в модели Prophet}
+    \label{img:holidays}
+\end{minipage}
+\end{figure}

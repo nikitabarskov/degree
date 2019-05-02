@@ -1,0 +1,25 @@
+\pgfplotstableread[col sep = comma]{inc/csv/network_1_ts.csv}\networktimeseries
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.9\textwidth}    
+    \begin{tikzpicture}[font=\scriptsize]
+        \begin{axis}[
+            date coordinates in=x,
+            width=\textwidth,
+            height=0.3\textwidth,
+            xmin=2018-03-01,
+            xmax=2019-03-01,
+            xtick distance=60,
+            xlabel=Дата,
+            ylabel style={align=center},
+            ylabel=Число уникальных\\взаимодействий]
+            \addplot+[no markers] table[x=date, y=uniques] {\networktimeseries};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}
+    \label{img:uniques}
+\end{minipage}
+\end{figure}
+
+

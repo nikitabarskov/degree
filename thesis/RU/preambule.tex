@@ -27,3 +27,12 @@
 
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{dateplot}
+\usepgfplotslibrary{fillbetween}
+\usepgfplotslibrary{statistics}
+
+\pgfplotstableread[col sep=comma]{inc/csv/network_1_ts.csv} \networktimeseries
+\pgfplotstableread[col sep=comma]{inc/csv/network_1_ts_decompose.csv} \timeseriesdecompose
