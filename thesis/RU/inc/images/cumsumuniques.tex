@@ -1,6 +1,8 @@
+\pgfplotstableread[col sep = comma]{inc/csv/network_1_ts.csv} \networktimeseries
+
 \begin{figure}[ht]
     \centering
-    \begin{tikzpicture}[font=\footnotesize]
+    \begin{tikzpicture}[font=\scriptsize]
         \begin{axis}[
             /pgf/number format/.cd,
                 fixed,
@@ -9,18 +11,16 @@
             date coordinates in=x,
             width=0.9\textwidth,
             height=0.3\textwidth,
-            xmin=2018-03-01,
-            xmax=2019-03-01,
-            xtick distance=60,
+            xmin=2019-01-01,
+            xmax=2019-02-15,
+            xtick distance=9,
             tick scale binop=\times,
             xlabel=Дата,
             ylabel style={align=center},
             ylabel=Число уникальных\\взаимодействий]
-            \addplot+[no markers] table[x=date, y=uniques] {\networktimeseries};
+            \addplot+[no markers] table[x=date, y=uniques] {\uniquescumsumtendays};
         \end{axis}
     \end{tikzpicture}
-    \caption{Временной ряд уникальных взаимодействий пользователей с рекламным содержимым интернет-страниц}
-    \label{img:uniques}
+    \caption{Временной кумулятивной суммы уникальных пользователей (окно 10 дней)}
+    \label{img:cumsumuniques}
 \end{figure}
-
-

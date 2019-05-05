@@ -1,22 +1,26 @@
 \begin{figure}[ht]
     \centering
-    \begin{minipage}{0.9\textwidth}    
-    \begin{tikzpicture}[font=\scriptsize]
+    \begin{tikzpicture}[font=\footnotesize]
         \begin{axis}[
+            /pgf/number format/.cd,
+                fixed,
+                use comma,
+            /tikz/.cd,
             date coordinates in=x,
-            width=\textwidth,
+            width=0.9\textwidth,
             height=0.3\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
             xtick distance=60,
+            tick scale binop=\times,
             xlabel=Дата,
-            ylabel=Число взаимодействий]
+            ylabel style={align=center},
+            ylabel=Число\\взаимодействий]
             \addplot+[no markers] table[x=date, y=impressions] {\networktimeseries};
         \end{axis}
     \end{tikzpicture}
     \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}
     \label{img:impressions}
-\end{minipage}
 \end{figure}
 
 
