@@ -1,38 +1,45 @@
-% borders of the page (follow the standard of samara university)
-\usepackage[left=30mm, right=10mm, top=20mm, bottom=20mm]{geometry}
+\RequirePackage{caption}
+\DeclareCaptionLabelSeparator{defffis}{ -- }
 
-\usepackage{fontspec}
-\usepackage{xunicode}
+\input{styles/page}
+\input{styles/headers}
+\input{styles/images}
+\input{styles/tables}
+\input{styles/enumerations}
+\input{styles/math}
+
+
+\usepackage{ifxetex}
+
+\usepackage{textcase}
+
+% Fonts
+\ifxetex{}
+\usepackage{polyglossia}
+
+\setmainlanguage[babelshorthands=true]{russian}
+\setotherlanguage{english}
 
 \setmainfont{Times}
+\setsansfont{Helvetica Neue}
+\setmonofont{Fira Code}
 \defaultfontfeatures{Ligatures=TeX}
 \newfontfamily\cyrillicfont{Times}
+\else
+\usepackage{cmap}
+\usepackage{textcomp}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\fi
 
-\usepackage{polyglossia}
-\setdefaultlanguage{russian}
+\usepackage{setspace}
 
-\usepackage{indentfirst}
-\renewcommand{\baselinestretch}{1.4}
-\parindent 1.27cm
+\usepackage{soulutf8}
+\usepackage{icomma}
 
 \sloppy
+\raggedbottom
 \hyphenpenalty=10000
 \clubpenalty=10000
 \widowpenalty=10000
-
-\usepackage{tabu}
-\usepackage{longtable}
-
-\usepackage{amsmath}
-
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows}
-
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
-\usepgfplotslibrary{dateplot}
-\usepgfplotslibrary{fillbetween}
-\usepgfplotslibrary{statistics}
-
-\pgfplotstableread[col sep=comma]{inc/csv/network_1_ts.csv} \networktimeseries
-\pgfplotstableread[col sep=comma]{inc/csv/network_1_ts_decompose.csv} \timeseriesdecompose

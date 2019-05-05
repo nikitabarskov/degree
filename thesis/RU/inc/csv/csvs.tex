@@ -1,0 +1,12 @@
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/network_1_ts.csv} 
+    \networktimeseries{}
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/network_1_ts_decompose.csv} 
+    \timeseriesdecompose{}
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/uniques-10-days.csv} 
+    \uniquescumsumtendays{}
