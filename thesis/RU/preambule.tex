@@ -1,45 +1,29 @@
-\RequirePackage{caption}
-\DeclareCaptionLabelSeparator{defffis}{ -- }
-
 \input{styles/page}
 \input{styles/headers}
+
+\RequirePackage{caption}
 \input{styles/images}
 \input{styles/tables}
+
 \input{styles/enumerations}
 \input{styles/math}
 
 
 \usepackage{ifxetex}
 
-\usepackage{textcase}
-
-% Fonts
 \ifxetex{}
-\usepackage{polyglossia}
-
-\setmainlanguage[babelshorthands=true]{russian}
-\setotherlanguage{english}
-
-\setmainfont{Times}
-\setsansfont{Helvetica Neue}
-\setmonofont{Fira Code}
-\defaultfontfeatures{Ligatures=TeX}
-\newfontfamily\cyrillicfont{Times}
+    \usepackage{polyglossia}
+    \setmainlanguage[babelshorthands=true]{russian}
+    \setotherlanguage{english}
+    \setmainfont{Times}
+    \setsansfont{Helvetica Neue}
+    \setmonofont{Fira Code}
+    \defaultfontfeatures{Ligatures=TeX}
+    \newfontfamily\cyrillicfont{Times}
 \else
-\usepackage{cmap}
-\usepackage{textcomp}
-\usepackage[T1,T2A]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english, russian]{babel}
+    \usepackage{cmap}
+    \usepackage{textcomp}
+    \usepackage[T1,T2A]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage[english, russian]{babel}
 \fi
-
-\usepackage{setspace}
-
-\usepackage{soulutf8}
-\usepackage{icomma}
-
-\sloppy
-\raggedbottom
-\hyphenpenalty=10000
-\clubpenalty=10000
-\widowpenalty=10000
