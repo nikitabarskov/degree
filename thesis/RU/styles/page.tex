@@ -1,11 +1,33 @@
 \usepackage{extsizes}
 \usepackage[left=30mm, right=10mm, top=20mm, bottom=20mm]{geometry}
 
+\usepackage{calc}
+
 \usepackage{setspace}
 \frenchspacing
 
 \usepackage{indentfirst}
-\AtBeginDocument{\setlength{\parindent}{2.5em}}
+\AtBeginDocument{
+    \setlength{\parindent}{1.25cm}
+}
+
+\newsavebox\abox
+\newsavebox\bbox
+
+\newlength\aboxlen
+\newlength\bboxlen
+
+\newlength\underlinelen
+
+\newcommand\tlinefill[3]{
+    \noindent#1\sbox\bbox{#1}\sbox\abox{#3}%
+    \settowidth\aboxlen{\usebox\abox}%
+    \settowidth\bboxlen{\usebox\bbox}%
+    \setlength\underlinelen{\linewidth}%
+    \addtolength\underlinelen{-\aboxlen}%
+    \addtolength\underlinelen{-\bboxlen}%
+    \underline{\hspace{\underlinelen}}#3\\
+    \hspace*{\fill}\footnotesize{#2}\hspace*{\fill}\normalsize}
 
 \sloppy{}
 \raggedbottom{}
@@ -21,3 +43,9 @@
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 \setcounter{page}{1}
+
+\setlength{\belowcaptionskip}{0pt}
+\setlength{\textfloatsep}{0pt}
+
+\usepackage{layouts}
+\setlength{\intextsep}{0pt}
