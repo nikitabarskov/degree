@@ -1,0 +1,22 @@
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.9\textwidth}    
+    \begin{tikzpicture}[font=\scriptsize]
+        \begin{axis}[
+            date coordinates in=x,
+            width=\linewidth,
+            height=0.3\textwidth,
+            xmin=2018-03-01,
+            xmax=2019-03-01,
+            xtick distance=60,
+            xlabel=Дата,
+            ylabel=$g(t)$]
+        \addplot+[no markers] table[x=date, y=trend,] {\timeseriesdecompose};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Временной ряд функции тренда в модели Prophet}
+    \label{img:trend}
+\end{minipage}
+\end{figure}
+
+

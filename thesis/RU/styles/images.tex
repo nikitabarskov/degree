@@ -1,0 +1,22 @@
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{dateplot}
+\usepgfplotslibrary{fillbetween}
+\usepgfplotslibrary{statistics}
+
+\input{inc/csv/csvs}
+
+\DeclareCaptionLabelFormat{gostfigure}{Рисунок #2}
+\DeclareCaptionLabelFormat{gosttable}{Таблица #2}
+
+\DeclareCaptionLabelSeparator{gost}{~---~}
+\captionsetup{labelsep=gost}
+
+\captionsetup[figure]{justification=centering, labelformat=gostfigure, format=plain}
+\captionsetup[table]{justification=raggedright, labelformat=gosttable, format=plain}

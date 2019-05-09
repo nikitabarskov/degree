@@ -1,3 +1,6 @@
+.idea
+**/.DS_Store
+
 *.aux
 *.toc
 *.synctex.gz

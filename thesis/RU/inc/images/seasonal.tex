@@ -1,0 +1,27 @@
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.9\textwidth}    
+    \begin{tikzpicture}[font=\scriptsize]
+        \begin{axis}[
+            date coordinates in=x,
+            width=\textwidth,
+            height=0.3\textwidth,
+            xmin=2018-03-01,
+            xmax=2018-06-31,
+            xtick distance=15,
+            xlabel=Дата,
+            ylabel=$s(t)$,
+            legend style={
+                at={(0.5,1.2)},
+                anchor=south,
+                nodes={right}},
+            legend columns=2,]
+        \addplot+[no markers] table[x=date, y=weekly,] {\timeseriesdecompose};
+        \addplot+[no markers] table[x=date, y=monthly,] {\timeseriesdecompose};
+        \legend{$T=7$ дней, $T=30$ дней}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Временной ряд функции cезонности в модели Prophet}
+    \label{img:seasonal}
+\end{minipage}
+\end{figure}
