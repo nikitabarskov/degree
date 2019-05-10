@@ -2,6 +2,10 @@
     \centering
     \begin{tikzpicture}[font=\small]
         \begin{axis}[
+            /pgf/number format/.cd,
+            fixed,
+            use comma,
+            /tikz/.cd,
             date coordinates in=x,
             width=.9\textwidth,
             height=.3\textwidth,
@@ -15,8 +19,7 @@
             \addplot+[no markers] table[x=date, y=impressions] {\networktimeseries};
         \end{axis}
     \end{tikzpicture}
-    \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}
-    \label{img:impressions}
+    \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}\label{img:impressions}
 \end{figure}
 
 

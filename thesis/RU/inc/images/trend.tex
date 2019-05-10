@@ -1,13 +1,17 @@
 \begin{figure}[ht]
-    \centering
-    \begin{minipage}{0.9\textwidth}    
-    \begin{tikzpicture}[font=\scriptsize]
+    \centering  
+    \begin{tikzpicture}[font=\small]
         \begin{axis}[
+            /pgf/number format/.cd,
+            fixed,
+            use comma,
+            /tikz/.cd,
             date coordinates in=x,
-            width=\linewidth,
+            width=0.9\linewidth,
             height=0.3\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
+            tick scale binop=\times,
             xtick distance=60,
             xlabel=Дата,
             ylabel=$g(t)$]
@@ -16,7 +20,6 @@
     \end{tikzpicture}
     \caption{Временной ряд функции тренда в модели Prophet}
     \label{img:trend}
-\end{minipage}
 \end{figure}
 
 
