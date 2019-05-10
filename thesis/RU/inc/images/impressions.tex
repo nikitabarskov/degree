@@ -1,17 +1,17 @@
-\begin{figure}[ht]
+\begin{figure}[ht!]
     \centering
-    \begin{tikzpicture}[font=\footnotesize]
+    \begin{tikzpicture}[font=\small]
         \begin{axis}[
             /pgf/number format/.cd,
-                fixed,
-                use comma,
+            fixed,
+            use comma,
             /tikz/.cd,
             date coordinates in=x,
-            width=0.9\textwidth,
-            height=0.3\textwidth,
+            width=.9\textwidth,
+            height=.3\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
-            xtick distance=60,
+            xtick distance=90,
             tick scale binop=\times,
             xlabel=Дата,
             ylabel style={align=center},
@@ -19,8 +19,7 @@
             \addplot+[no markers] table[x=date, y=impressions] {\networktimeseries};
         \end{axis}
     \end{tikzpicture}
-    \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}
-    \label{img:impressions}
+    \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}\label{img:impressions}
 \end{figure}
 
 

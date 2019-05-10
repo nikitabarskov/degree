@@ -1,20 +1,22 @@
 \begin{figure}[ht]
-    \centering
-    \begin{minipage}{0.9\textwidth}    
-    \begin{tikzpicture}[font=\scriptsize]
+    \centering  
+    \begin{tikzpicture}[font=\small]
         \begin{axis}[
+            /pgf/number format/.cd,
+            fixed,
+            use comma,
+            /tikz/.cd,
             date coordinates in=x,
-            width=\textwidth,
+            width=0.9\textwidth,
             height=0.3\textwidth,
             xmin=2018-03-01,
             xmax=2018-06-31,
-            xtick distance=15,
+            tick scale binop=\times,
+            xtick distance=30,
             xlabel=Дата,
             ylabel=$h(t)$]
-        \addplot+[no markers] table[x=date, y=holiday,] {\timeseriesdecompose};
+        \addplot+[no markers] table[x=date, y=holiday] {\timeseriesdecompose};
         \end{axis}
     \end{tikzpicture}
-    \caption{Временной ряд функции внешних событий в модели Prophet}
-    \label{img:holidays}
-\end{minipage}
+    \caption{Временной ряд функции внешних событий в модели Prophet}\label{img:holidays}
 \end{figure}

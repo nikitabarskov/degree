@@ -1,14 +1,23 @@
-% !TEX program = pdflatex
+% !TEX program = xelatex
 % !TEX encoding = UTF-8 Unicode
 
-\documentclass[a4paper, 14pt, oneside]{article}
+\documentclass[a4paper, 14pt, oneside]{extarticle}
 
 \include{preambule}
 
 \begin{document}
+
+    \singlespacing{}
+    \include{inc/sections/title}
+    \include{inc/sections/task}
+
     \onehalfspacing{}
-    \thispagestyle{empty}
     \tableofcontents{}
+    \thispagestyle{empty}
+
     \include{inc/sections/intro}
     \include{inc/sections/summary}
+
+    \printbibliography[title=Список использованных источников]{}
+    
 \end{document}

@@ -8,18 +8,19 @@
 \input{styles/enumerations}
 \input{styles/math}
 
-
 \usepackage{ifxetex}
 
 \ifxetex{}
     \usepackage{polyglossia}
-    \setmainlanguage[babelshorthands=true]{russian}
+    \setdefaultlanguage[babelshorthands=true]{russian} %язык по умолчанию
     \setotherlanguage{english}
-    \setmainfont{Times}
+    \setmainfont{Times New Roman}
     \setsansfont{Helvetica Neue}
-    \setmonofont{Fira Code}
+    \setmonofont[Scale=MatchLowercase]{Fira Code}
+    \usepackage{newtxmath}
     \defaultfontfeatures{Ligatures=TeX}
-    \newfontfamily\cyrillicfont{Times}
+    \newfontfamily\cyrillicfont{Times New Roman}
+    \newfontfamily\cyrillicfontsf{Helvetica Neue}
 \else
     \usepackage{cmap}
     \usepackage{textcomp}
@@ -27,3 +28,5 @@
     \usepackage[utf8]{inputenc}
     \usepackage[english, russian]{babel}
 \fi
+
+\input{styles/bibliography}

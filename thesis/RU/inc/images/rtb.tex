@@ -2,11 +2,11 @@
     rectangle,  
     minimum width=3cm, 
     minimum height=1cm,
-    font=\footnotesize,
+    font=\small,
     text centered, 
     text width=2.5cm,
     draw=black,
-    fill=blue!15]
+    fill=blue!20]
 
 \tikzstyle{arrow} = [
     thick,
@@ -20,7 +20,7 @@
         \node (user_2) [entity, below of=user_1, yshift=-0.5cm] {Посетитель 2};
         \node (user_3) [entity, below of=user_2, yshift=-0.5cm] {Посетитель 3};
         \node (page) [entity, right of=user_2, xshift=2.5cm] {Интернет страница с рекламным элементом};
-        \draw [arrow] (user_1) -| node[anchor=south, font=\footnotesize, text width=3cm] {Уведомление о показе рекламного места} (page);
+        \draw [arrow] (user_1) -| node[anchor=south, font=\small, text width=3cm] {Уведомление о показе рекламного места} (page);
         \draw [arrow] (user_2) -- (page);
         \draw [arrow] (user_3) -| (page);
 
@@ -32,7 +32,7 @@
         \node (dsp_1) [entity, above of=dsp_2, yshift=0.5cm] {DSP 1};
         \node (dsp_3) [entity, below of=dsp_2, yshift=-0.5cm] {DSP 3};
 
-        \draw [arrow] (ssp) |- node[anchor=south, font=\footnotesize, text width=3cm] {Предоставление рекламного места для продажи} (dsp_1);
+        \draw [arrow] (ssp) |- node[anchor=south, font=\small, text width=3cm] {Предоставление рекламного места для продажи} (dsp_1);
         \draw [arrow] (ssp) -- (dsp_2);
         \draw [arrow] (ssp) |- (dsp_3);
 
@@ -40,10 +40,9 @@
         \node (advertiser_2) [entity, right of=dsp_2, xshift=2.5cm] {Рекламодатель 2};
         \node (advertiser_3) [entity, right of=dsp_3, xshift=2.5cm, yshift=-1cm] {Рекламодатель 3};
 
-        \draw [arrow] (dsp_1) |- node[anchor=south, font=\footnotesize, text width=3cm] {Запрос рекламного содержимого} (advertiser_1);
+        \draw [arrow] (dsp_1) |- node[anchor=south, font=\small, text width=3cm] {Запрос рекламного содержимого} (advertiser_1);
         \draw [arrow] (dsp_2) -- (advertiser_2);
         \draw [arrow] (dsp_3) |- (advertiser_3);
     \end{tikzpicture}
-    \caption{Схема алгоритмической покупки рекламы}
-    \label{img:pragrammatic-advertising}
+    \caption{Схема алгоритмической покупки рекламы}\label{img:pragrammatic-advertising}
 \end{figure}

@@ -6,4 +6,8 @@
 *.synctex.gz
 *.pdf
 *.log
+*.dvi
+*.out
 **/__latexindent_temp.tex
+
+templates
