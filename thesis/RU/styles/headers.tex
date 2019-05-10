@@ -14,23 +14,46 @@
 \renewcommand\cftsecleader{\cftdotfill{\cftdotsep}}
 \renewcommand\cftsecpagefont{\mdseries}
 
-\makeatletter
-\let\oldcontentsline\contentsline
-\def\contentsline#1#2{%
-  \expandafter\ifx\csname l@#1\endcsname\l@section
-    \expandafter\@firstoftwo
-  \else
-    \expandafter\@secondoftwo
-  \fi
-  {\oldcontentsline{#1}{\MakeUppercase{#2}}}
-  {\oldcontentsline{#1}{#2}}
-}
-\makeatother
+% \makeatletter
+% \let\oldcontentsline\contentsline
+% \def\contentsline#1#2{%
+%   \expandafter\ifx\csname l@#1\endcsname\l@section
+%     \expandafter\@firstoftwo
+%   \else
+%     \expandafter\@secondoftwo
+%   \fi
+%   {\oldcontentsline{#1}{\MakeUppercase{#2}}}
+%   {\oldcontentsline{#1}{#2}}
+% }
+% \makeatother
 
 \usepackage{titlesec}
-\titleformat{\section}{}{}{0em}{\thesection\quad\normalsize}
-\titleformat{\subsection}{}{}{0em}{\thesubsection\quad\normalsize}
-\titleformat{\subsubsection}{}{}{0em}{\thesubsubsection\quad\normalsize}
-\titlespacing*{\section}{2.5em}{0em}{0em}
-\titlespacing*{\subsection}{2.5em}{0em}{0em}
-\titlespacing*{\subsubsection}{2.5em}{0em}{0em}
+
+\titleformat{\section}
+  {}
+  {}
+  {0em}
+  {\bfseries\thesection\quad\normalsize}
+\titleformat{\subsection}
+  {}
+  {}
+  {0em}
+  {\bfseries\thesubsection\quad\normalsize}
+\titleformat{\subsubsection}
+  {}
+  {}
+  {0em}
+  {\bfseries\thesubsubsection\quad\normalsize}
+
+\titlespacing{\section}
+  {\parindent}
+  {0em}
+  {0em}
+\titlespacing{\subsection}
+  {\parindent}
+  {0em}
+  {0em}
+\titlespacing{\subsubsection}
+  {\parindent}
+  {0em}
+  {0em}
