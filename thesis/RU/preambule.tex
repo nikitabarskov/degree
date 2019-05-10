@@ -12,12 +12,11 @@
 
 \ifxetex{}
     \usepackage{polyglossia}
-    \setmainlanguage[babelshorthands=true]{russian}
+    \setdefaultlanguage[babelshorthands=true]{russian} %язык по умолчанию
     \setotherlanguage{english}
     \setmainfont{Times New Roman}
     \setsansfont{Helvetica Neue}
     \setmonofont{Fira Code}
-    \usepackage{fontspec}
     \usepackage{newtxmath}
     \defaultfontfeatures{Ligatures=TeX}
     \newfontfamily\cyrillicfont{Times New Roman}
@@ -29,3 +28,5 @@
     \usepackage[utf8]{inputenc}
     \usepackage[english, russian]{babel}
 \fi
+
+\input{styles/bibliography}

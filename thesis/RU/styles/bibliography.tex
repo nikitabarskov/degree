@@ -1,0 +1,106 @@
+\usepackage{csquotes}
+\usepackage[parentracker=true,
+  backend=biber,
+  hyperref=auto,
+  language=auto,
+  autolang=other,
+  bibstyle=gost-numeric,
+]{biblatex}
+
+\DeclareSourcemap{
+    \maps{
+        \map{
+            \step[fieldsource=language, fieldset=langid, origfieldval, final]
+            \step[fieldset=language, null]
+        }
+        \map[overwrite]{
+            \step[fieldsource=shortjournal, final]
+            \step[fieldset=journal, origfieldval]
+        }
+        \map[overwrite]{
+            \step[fieldsource=shortbooktitle, final]
+            \step[fieldset=booktitle, origfieldval]
+        }
+        \map[overwrite, refsection=0]{% стираем значения всех полей addendum
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldsource=addendum, final]
+            \step[fieldset=addendum, null] %чтобы избавиться от информации об объёме авторских статей, в отличие от автореферата
+        }
+        \map[overwrite]{% перекидываем refbase в addendum, чтобы указать тип публикации (ВАК, Scopus, WoS) в конце ссылки
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldsource=refbase, final]
+            \step[fieldset=addendum, origfieldval]
+        }
+        \map{% перекидываем значения полей numpages в поля pagetotal, которыми пользуется biblatex
+            \step[fieldsource=numpages, fieldset=pagetotal, origfieldval, final]
+            \step[fieldset=pagestotal, null]
+        }
+        \map{% если в поле medium написано "Электронный ресурс", то устанавливаем поле media, которым пользуется biblatex, в значение eresource.
+            \step[fieldsource=medium,
+            match=\regexp{Электронный\s+ресурс},
+            final]
+            \step[fieldset=media, fieldvalue=eresource]
+        }
+        \map[overwrite]{% стираем значения всех полей issn
+            \step[fieldset=issn, null]
+        }
+        \map[overwrite]{% стираем значения всех полей abstract, поскольку ими не пользуемся, а там бывают "неприятные" латеху символы
+            \step[fieldsource=abstract]
+            \step[fieldset=abstract,null]
+        }
+        \map[overwrite]{ % переделка формата записи даты
+            \step[fieldsource=urldate,
+            match=\regexp{([0-9]{2})\.([0-9]{2})\.([0-9]{4})},
+            replace={$3-$2-$1$4}, % $4 вставлен исключительно ради нормальной работы программ подсветки синтаксиса, которые некорректно обрабатывают $ в таких конструкциях
+            final]
+        }
+        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldset=keywords, fieldvalue={biblioexternal,bibliofull}]
+        }
+        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+            \perdatasource{biblio/authorvak.bib}
+            \step[fieldset=keywords, fieldvalue={biblioauthorvak,biblioauthor,bibliofull}]
+        }
+        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldset=keywords, fieldvalue={biblioauthorscopus,biblioauthor,bibliofull}]
+        }
+        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldset=keywords, fieldvalue={biblioauthorwos,biblioauthor,bibliofull}]
+        }
+        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldset=keywords, fieldvalue={biblioauthorother,biblioauthor,bibliofull}]
+        }
+        \map[overwrite]{ % добавляем ключевые слова, чтобы различать источники
+            \perdatasource{inc/bibliography/biblio.bib}
+            \step[fieldset=keywords, fieldvalue={biblioauthorconf,biblioauthor,bibliofull}]
+        }
+        \map[overwrite]{% перекидываем значения полей howpublished в поля organization для типа online
+            \step[typesource=online, typetarget=online, final]
+            \step[fieldsource=howpublished, fieldset=organization, origfieldval]
+            \step[fieldset=howpublished, null]
+        }
+    }
+}
+
+\bibliography{inc/bibliography/biblio.bib}
+
+\defbibenvironment{bibliography}
+                    {
+                      \list{
+                        \printfield{prefixnumber}%
+                        \printfield{labelnumber}}
+                        {
+                          \setlength{\leftmargin}{0em}%
+                          \setlength{\itemindent}{\parindent}%
+                          \setlength{\itemsep}{\bibitemsep}%
+                          \setlength{\parsep}{\bibparsep}}}
+                      {\endlist}
+                      {\item}
+
+\defbibheading{bibliography}[\bibname]{%
+                      \structuresection{#1}%
+                      \markboth{#1}{#1}}
