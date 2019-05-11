@@ -11,16 +11,14 @@
 \usepackage{ifxetex}
 
 \ifxetex{}
-    \usepackage{polyglossia}
-    \setdefaultlanguage[babelshorthands=true]{russian} %язык по умолчанию
-    \setotherlanguage{english}
-    \setmainfont{Times New Roman}
+    \usepackage{fontspec}
+    \setmainfont{Times New Roman}[Ligatures=TeX]
     \setsansfont{Helvetica Neue}
     \setmonofont[Scale=MatchLowercase]{Fira Code}
-    \usepackage{newtxmath}
-    \defaultfontfeatures{Ligatures=TeX}
-    \newfontfamily\cyrillicfont{Times New Roman}
-    \newfontfamily\cyrillicfontsf{Helvetica Neue}
+    \usepackage[english,russian]{babel}
+
+    % \usepackage{unicode-math}
+    % \setmathfont{STIX Two Math}
 \else
     \usepackage{cmap}
     \usepackage{textcomp}

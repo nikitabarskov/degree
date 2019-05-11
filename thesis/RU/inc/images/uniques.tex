@@ -8,14 +8,14 @@
             /tikz/.cd,
             date coordinates in=x,
             width=.9\textwidth,
-            height=.3\textwidth,
+            height=.35\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
             xtick distance=90,
             tick scale binop=\times,
             xlabel=Дата,
             ylabel style={align=center},
-            ylabel=Число уникальных\\взаимодействий]
+            ylabel=$\text{Distinct} \displaystyle{\left( A, T_0, T_1, \left\{\symbf{U}\right\} \right)}$]
             \addplot+[no markers] table[x=date, y=uniques] {\networktimeseries};
         \end{axis}
     \end{tikzpicture}

@@ -3,19 +3,19 @@
     \begin{tikzpicture}[font=\small]
         \begin{axis}[
             /pgf/number format/.cd,
-            fixed,
-            use comma,
+                fixed,
+                use comma,
             /tikz/.cd,
             date coordinates in=x,
             width=.9\textwidth,
-            height=.3\textwidth,
+            height=.32\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
             xtick distance=90,
             tick scale binop=\times,
             xlabel=Дата,
             ylabel style={align=center},
-            ylabel=Число\\взаимодействий]
+            ylabel=$\text{Imps} \displaystyle{\left(A, T_0, T_1, \left\{ \mathbf{U} \right\} \right)}$]
             \addplot+[no markers] table[x=date, y=impressions] {\networktimeseries};
         \end{axis}
     \end{tikzpicture}

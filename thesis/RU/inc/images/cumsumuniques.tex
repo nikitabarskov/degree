@@ -7,15 +7,15 @@
                 use comma,
             /tikz/.cd,
             date coordinates in=x,
-            width=0.9\textwidth,
-            height=0.3\textwidth,
+            width=0.85\textwidth,
+            height=0.35\textwidth,
             xmin=2019-01-01,
             xmax=2019-02-15,
             xtick distance=9,
             tick scale binop=\times,
             xlabel=Дата,
             ylabel style={align=center},
-            ylabel=Число уникальных\\взаимодействий]
+            ylabel=Кумулятивная сумма\\уникальных\\взаимодействий]
             \addplot+[no markers] table[x=date, y=uniques] {\uniquescumsumtendays};
         \end{axis}
     \end{tikzpicture}

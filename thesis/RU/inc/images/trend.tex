@@ -3,16 +3,16 @@
     \begin{tikzpicture}[font=\small]
         \begin{axis}[
             /pgf/number format/.cd,
-            fixed,
-            use comma,
+                fixed,
+                use comma,
             /tikz/.cd,
             date coordinates in=x,
-            width=0.9\linewidth,
+            width=0.9\textwidth,
             height=0.3\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
             tick scale binop=\times,
-            xtick distance=60,
+            xtick distance=90,
             xlabel=Дата,
             ylabel=$g(t)$]
         \addplot+[no markers] table[x=date, y=trend,] {\timeseriesdecompose};
