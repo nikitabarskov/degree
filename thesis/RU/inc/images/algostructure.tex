@@ -1,0 +1,93 @@
+\makeatletter
+\pgfdeclareshape{datastore}{
+  \inheritsavedanchors[from=rectangle]
+  \inheritanchorborder[from=rectangle]
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchor[from=rectangle]{base}
+  \inheritanchor[from=rectangle]{north}
+  \inheritanchor[from=rectangle]{north east}
+  \inheritanchor[from=rectangle]{east}
+  \inheritanchor[from=rectangle]{south east}
+  \inheritanchor[from=rectangle]{south}
+  \inheritanchor[from=rectangle]{south west}
+  \inheritanchor[from=rectangle]{west}
+  \inheritanchor[from=rectangle]{north west}
+  \backgroundpath{
+    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+ }
+}
+\makeatother
+
+
+\tikzstyle{source} = [
+    draw,
+    thick,
+    rounded corners,
+    fill=yellow!20,
+    minimum width=3cm, 
+    minimum height=1cm,
+    font=\small,
+    text centered, 
+    text width=2.5cm]
+\tikzstyle{process} = [
+    draw,
+    thick,
+    circle,
+    fill=blue!20,
+    text centered, 
+    text width=2.5cm]
+\tikzstyle{datastore} = [
+    draw,
+    very thick,
+    shape=datastore,
+    minimum width=3cm, 
+    minimum height=1cm,
+    font=\small,
+    text centered, 
+    text width=2.5cm]
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+        \node (source_data) [source] {Исходный протокол работы рекламной системы};
+        \node (hadoop_storage) [datastore, right of=source_data, xshift=3cm] {Хранилище исходных данных};
+        \draw [arrow] (source_data) -- (hadoop_storage);
+        \node (converting) [process, right of=hadoop_storage, xshift=3cm] {Конвертация данных в формат для обработки};
+        \draw [arrow] (hadoop_storage) -- (converting);
+        \node (reports)
+%         \node (extract) [entity, right of=source_data, xshift=5cm] {Приведение данных к виду, пригодному для обработки};
+%         \node (export_report) [entity, right of=extract, xshift=5cm] {Приведение данных к виду, пригодному для обработки};
+        % \node (user_2) [entity, below of=user_1, yshift=-0.5cm] {Посетитель 2};
+        % \node (user_3) [entity, below of=user_2, yshift=-0.5cm] {Посетитель 3};
+%         % \node (page) [entity, right of=user_2, xshift=2.5cm] {Интернет страница с рекламным элементом};
+%         % \draw [arrow] (user_1) -| node[anchor=south, font=\small, text width=3cm] {Уведомление о показе рекламного места} (page);
+%         % \draw [arrow] (user_2) -- (page);
+%         % \draw [arrow] (user_3) -| (page);
+
+%         % \node (ssp) [entity, right of=page, xshift=2.5cm] {SSP};
+            
+%         % \draw [arrow] (page) -- (ssp);
+            
+%         % \node (dsp_2) [entity, right of=ssp, xshift=2.5cm] {DSP 2};
+%         % \node (dsp_1) [entity, above of=dsp_2, yshift=0.5cm] {DSP 1};
+%         % \node (dsp_3) [entity, below of=dsp_2, yshift=-0.5cm] {DSP 3};
+
+%         % \draw [arrow] (ssp) |- node[anchor=south, font=\small, text width=3cm] {Предоставление рекламного места для продажи} (dsp_1);
+%         % \draw [arrow] (ssp) -- (dsp_2);
+%         % \draw [arrow] (ssp) |- (dsp_3);
+
+%         % \node (advertiser_1) [entity, right of=dsp_1, xshift=2.5cm, yshift=1cm] {Рекламодатель 1};
+%         % \node (advertiser_2) [entity, right of=dsp_2, xshift=2.5cm] {Рекламодатель 2};
+%         % \node (advertiser_3) [entity, right of=dsp_3, xshift=2.5cm, yshift=-1cm] {Рекламодатель 3};
+
+%         % \draw [arrow] (dsp_1) |- node[anchor=south, font=\small, text width=3cm] {Запрос рекламного содержимого} (advertiser_1);
+%         % \draw [arrow] (dsp_2) -- (advertiser_2);
+%         % \draw [arrow] (dsp_3) |- (advertiser_3);
+    \end{tikzpicture}
+    \caption{Конвейер потока данных алгоритма прогнозирования}\label{img:pragrammatic-advertising}
+\end{figure}
