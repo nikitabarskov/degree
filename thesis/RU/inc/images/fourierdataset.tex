@@ -1,0 +1,30 @@
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[font=\small]
+        \begin{axis}[
+            /pgf/number format/.cd,
+                fixed,
+                use comma,
+            /tikz/.cd,
+            extra x ticks={1/7,1/3.5},
+            extra x tick style={
+                grid=major,
+                tick pos = right,
+                ticklabel pos = right,
+            },
+            xmin=0,
+            xmax=0.5,
+            ymin=-0.1,
+            ylabel={Спектральная плотность $S$},
+            xlabel={Частота},
+            width=.8\textwidth,
+            tick scale binop=\times,
+            axis x line*=bottom,
+            axis y line*=left,
+            xlabel near ticks,
+            ylabel near ticks,]
+          \addplot+[ycomb, thick, mark=*] table [x=freq, y=value] {\fourierdataset};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Спектральная плотность исходных данных}\label{img:spectraldensity}
+\end{figure}

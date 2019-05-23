@@ -2,11 +2,98 @@
     col sep=comma
     ]{inc/csv/network_1_ts.csv} 
     \networktimeseries{}
+
 \pgfplotstableread[
     col sep=comma
     ]{inc/csv/network_1_ts_decompose.csv} 
     \timeseriesdecompose{}
+
 \pgfplotstableread[
     col sep=comma
     ]{inc/csv/uniques-10-days.csv} 
     \uniquescumsumtendays{}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/fourier.csv} 
+    \fourierdataset{}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/network.csv} 
+    \networkimpressions{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/eval-2019-02-28-1day.csv}
+        \fbteod{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-1day-naive.csv}
+        \fbteodmaenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-1day-calibrated.csv}
+        \fbteodmaecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-1day-naive.csv}
+        \fbteodmapenaive{}        
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-1day-calibrated.csv}
+        \fbteodmapecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/eval-2019-02-28-7days.csv}
+        \fbtesd{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-7days-naive.csv}
+        \fbtesdmaenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-7days-calibrated.csv}
+        \fbtesdmaecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-7days-naive.csv}
+        \fbtesdmapenaive{}        
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-7days-calibrated.csv}
+        \fbtesdmapecalibrated{}
+
+\pgfplotstableread[
+            col sep = comma
+            ]{inc/csv/eval-2019-02-28-3days.csv}
+            \fbtefd{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-3days-naive.csv}
+        \fbtefdmaenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-3days-calibrated.csv}
+        \fbtefdmaecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-3days-naive.csv}
+        \fbtefdmapenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-3days-calibrated.csv}
+        \fbtefdmapecalibrated{}

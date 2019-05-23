@@ -1,0 +1,31 @@
+\begin{figure}[ht]
+    \centering
+\begin{tikzpicture}[font=\footnotesize]
+    \begin{axis}[
+        ybar,
+        width=0.6\linewidth,
+        ylabel=Число отсчетов прогноза,
+        legend style={at={(0.5,1.1)},anchor=south},
+        legend columns=2,
+        tick scale binop=\times]
+        \addplot+[
+            hist={
+                bins=11,
+                data min=-1,
+                data max=1
+            },
+            opacity=0.5   
+        ] table [y index=0] {\fbtesdmapecalibrated};
+        \addplot+[
+            hist={
+                bins=11,
+                data min=-1,
+                data max=1
+            },
+            opacity=0.5   
+        ] table [y index=0] {\fbtesdmapenaive};
+    \legend{Предложенный алгоритм, Наивный подход}
+    \end{axis}
+\end{tikzpicture}
+\caption{Распределение относительной ошибки (горизонт прогноза 7 дней)}\label{img:1-7-mape}
+\end{figure}

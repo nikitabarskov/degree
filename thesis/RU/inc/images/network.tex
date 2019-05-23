@@ -7,7 +7,7 @@
                 use comma,
             /tikz/.cd,
             date coordinates in=x,
-            width=.9\textwidth,
+            width=.95\textwidth,
             height=.32\textwidth,
             xmin=2018-03-01,
             xmax=2019-03-01,
@@ -15,9 +15,9 @@
             tick scale binop=\times,
             xlabel=Дата,
             ylabel style={align=center},
-            ylabel=$\text{Imps} \displaystyle{\left(A, T_0, T_1, \left\{ \mathbf{U} \right\} \right)}$]
-            \addplot+[no markers] table[x=date, y=impressions] {\networktimeseries};
+            ylabel=Число\\взаимодействий]
+            \addplot+[no markers] table[x=date, y=impressions] {\networkimpressions};
         \end{axis}
     \end{tikzpicture}
-    \caption{Временной ряд взаимодействий пользователей с рекламным содержимым интернет-страниц}\label{img:impressions}
+    \caption{Метрика общего числа взаимодействий пользователей с рекламными элементами}\label{img:network-impressions}
 \end{figure}

@@ -13,19 +13,7 @@
 \renewcommand{\cftsecfont}{}
 \renewcommand\cftsecleader{\cftdotfill{\cftdotsep}}
 \renewcommand\cftsecpagefont{\mdseries}
-
-% \makeatletter
-% \let\oldcontentsline\contentsline
-% \def\contentsline#1#2{%
-%   \expandafter\ifx\csname l@#1\endcsname\l@section
-%     \expandafter\@firstoftwo
-%   \else
-%     \expandafter\@secondoftwo
-%   \fi
-%   {\oldcontentsline{#1}{\MakeUppercase{#2}}}
-%   {\oldcontentsline{#1}{#2}}
-% }
-% \makeatother
+\setlength{\cftbeforesecskip}{0pt}
 
 \usepackage{titlesec}
 
@@ -33,17 +21,17 @@
   {}
   {}
   {0em}
-  {\bfseries\thesection\quad\normalsize}
+  {\thesection~\normalsize}
 \titleformat{\subsection}
   {}
   {}
   {0em}
-  {\bfseries\thesubsection\quad\normalsize}
+  {\thesubsection~\normalsize}
 \titleformat{\subsubsection}
   {}
   {}
   {0em}
-  {\bfseries\thesubsubsection\quad\normalsize}
+  {\thesubsubsection~\normalsize}
 
 \titlespacing{\section}
   {\parindent}
