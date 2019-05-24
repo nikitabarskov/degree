@@ -1,5 +1,5 @@
 \usepackage{extsizes}
-\usepackage[left=30mm, right=10mm, top=20mm, bottom=20mm]{geometry}
+\usepackage[includefoot, left=30mm, right=10mm, top=20mm, bottom=20mm]{geometry}
 
 \usepackage{calc}
 
@@ -27,7 +27,7 @@
     \addtolength\underlinelen{-\aboxlen}%
     \addtolength\underlinelen{-\bboxlen}%
     \underline{\hspace{\underlinelen}}#3\\
-    \hspace*{\fill}\footnotesize{#2}\hspace*{\fill}\normalsize}
+    \hspace*{\fill}\small{#2}\hspace*{\fill}\normalsize}
 
 \sloppy{}
 \raggedbottom{}
@@ -39,18 +39,18 @@
 \pagestyle{plain}
 \fancyhead[C]{\thepage}
 \fancyheadoffset{0em}
-\fancyfootoffset{0em}
+\fancyfootoffset{10mm}
 \renewcommand{\headrulewidth}{0em}
-\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\footrulewidth}{10mm}
 \setcounter{page}{1}
 
 % \AtBeginDocument{\setlength\abovedisplayskip{0em}}
 % \AtBeginDocument{\setlength{\abovedisplayshortskip}{0em}}
 % \AtBeginDocument{\setlength\belowdisplayskip{0em}}
 % \AtBeginDocument{\setlength{\belowdisplayshortskip}{0em}}
-\AtBeginDocument{\setlength{\abovecaptionskip}{0.25em}}
+\AtBeginDocument{\setlength{\abovecaptionskip}{7pt}}
 \AtBeginDocument{\setlength{\belowcaptionskip}{0em}}
 % \AtBeginDocument{\setlength{\textfloatsep}{0em}}
 
 \usepackage{layouts}
-\AtBeginDocument{\setlength{\intextsep}{0.25em}}
+\AtBeginDocument{\setlength{\intextsep}{0em}}
