@@ -1,0 +1,53 @@
+\medskip
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[font=\footnotesize\ttfamily]
+        \begin{class}[text width=6cm]{DataProvider}{0,0}
+            \attribute{spark: SparkSession}
+            \attribute{hadoop : HadoopClient}
+            \attribute{paths : Dict}
+            \operation{read\_source\_logs(date) : DataFrame}
+            \operation{read\_sample(date) : DataFrame}
+            \operation{read\_report(date) : DataFrame}
+            \operation{read\_future\_sample(date) : DataFrame}
+            \operation{read\_forecast(date) : DataFrame}
+            \operation{read\_calibration(date) : DataFrame}
+            \operation{write\_sample(date) : None}
+            \operation{write\_report(date) : None}
+            \operation{write\_future\_sample(date) : None}
+            \operation{write\_forecast(date) : None}
+            \operation{write\_calibration(date) : None}
+        \end{class}
+        \begin{class}[text width=4cm]{PreprocessingStage}{5.5,0}
+            \attribute{provider: DataProvider}
+            \operation{run(date) : DataFrame}
+        \end{class}
+        \begin{class}[text width=4cm]{SampleStage}{5.5,-2.25}
+            \attribute{provider: DataProvider}
+            \attribute{probability: float}
+            \operation{run(date) : DataFrame}
+        \end{class}
+        \begin{class}[text width=4cm]{StatisticsStage}{5.5,-4.9}
+            \attribute{provider: DataProvider}
+            \operation{run(date) : DataFrame}
+        \end{class}
+        \begin{class}[text width=4cm]{NaiveForecastStage}{10,0}
+            \attribute{provider: DataProvider}
+            \attribute{forecast\_period: int}
+            \operation{run(date) : DataFrame}
+        \end{class}
+        \begin{class}[text width=4cm]{ForecastStage}{10,-2.75}
+            \attribute{provider: DataProvider}
+            \attribute{forecast\_period: int}
+            \operation{run(date) : DataFrame}
+        \end{class}
+        \begin{class}[text width=4cm]{CalibrationStage}{10,-5.5}
+            \attribute{provider: DataProvider}
+            \attribute{left\_border: int}
+            \attribute{right\_border: int}
+            \attribute{tolerance: float}
+            \operation{run(date) : DataFrame}
+        \end{class}
+    \end{tikzpicture}
+    \caption{Диаграмма классов разрабатываемой системы}\label{img:uml}
+\end{figure}

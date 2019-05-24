@@ -1,0 +1,116 @@
+\makeatletter
+\pgfdeclareshape{datastore}{
+  \inheritsavedanchors[from=rectangle]
+  \inheritanchorborder[from=rectangle]
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchor[from=rectangle]{base}
+  \inheritanchor[from=rectangle]{north}
+  \inheritanchor[from=rectangle]{north east}
+  \inheritanchor[from=rectangle]{east}
+  \inheritanchor[from=rectangle]{south east}
+  \inheritanchor[from=rectangle]{south}
+  \inheritanchor[from=rectangle]{south west}
+  \inheritanchor[from=rectangle]{west}
+  \inheritanchor[from=rectangle]{north west}
+  \backgroundpath{
+    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+ }
+}
+\makeatother
+\tikzstyle{source} = [
+    draw,
+    thick,
+    rounded corners,
+    fill=yellow!20,
+    minimum width=2cm, 
+    minimum height=1cm,
+    text centered, 
+    text width=1.75cm]
+\tikzstyle{process} = [
+    draw,
+    thick,
+    circle,
+    minimum size=2cm,
+    inner sep=1pt,
+    fill=blue!20,
+    text centered, 
+    text width=2cm]
+
+\tikzstyle{datastore} = [
+    draw,
+    very thick,
+    shape=datastore,
+    inner sep=3pt,
+    minimum width=2cm, 
+    minimum height=1cm,
+    text centered, 
+    text width=1.75cm]
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[font=\footnotesize]
+        \node (source_data) [source] {Протокол работы рекламной системы};
+        \node (source_logs_storage) [
+            datastore, 
+            right of=source_data, 
+            xshift=1.5cm] {Хранилище протокола работы};
+        \node (sample_extract) [
+            process, 
+            right of=source_logs_storage, 
+            xshift=1.5cm, 
+            yshift=2cm] {Проведение выборки};
+        \node (reports_extract) [
+            process, 
+            right of=source_logs_storage, 
+            xshift=1.5cm, 
+            yshift=-2cm] {Получение статистики метрик};
+        \node (sample_report_storage) [
+            datastore, 
+            right of=source_logs_storage, 
+            xshift=4cm] {Хранилище выборки и статистики метрик};
+        \node (naive_forecast) [
+            process, 
+            right of=sample_report_storage, 
+            xshift=1.75cm, 
+            yshift=3cm] {Построение прогноза протокола работы};
+        \node (forecast) [
+            process, 
+            right of=sample_report_storage, 
+            xshift=1.75cm, 
+            yshift=-3cm] {Построение прогноза метрик};
+        \node (naive_storage) [
+            datastore, 
+            right of=sample_report_storage, 
+            xshift=4cm] {Хранилище прогноза протокола работы и метрик};
+        \node (calibration) [
+            process, 
+            below of=naive_storage, 
+            yshift=-4.5cm] {Калибровка};
+        \node (forecast_storage) [
+            datastore, 
+            left of=calibration, 
+            xshift=-5cm] {Хранилище результатов калибровки};
+        \node (result) [
+            source, 
+            left of=forecast_storage, 
+            xshift=-5cm] {Итоговый прогноз протокола работы};
+        \draw [arrow] (source_data) -- (source_logs_storage);
+        \draw [arrow] (source_logs_storage)--($(source_logs_storage.east)-(0,0.5)$) -| (reports_extract);
+        \draw [arrow] (source_logs_storage)--($(source_logs_storage.east)-(0,-0.5)$) -| (sample_extract);
+        \draw [arrow] (reports_extract) -| (sample_report_storage);
+        \draw [arrow] (sample_extract) -| (sample_report_storage); 
+        \draw [arrow] (sample_report_storage)--($(sample_report_storage.east)-(0,-0.5)$) -| (naive_forecast);
+        \draw [arrow] (sample_report_storage)--($(sample_report_storage.east)-(0,0.5)$) -| (forecast);
+        \draw [arrow] (naive_forecast) -| (naive_storage);
+        \draw [arrow] (forecast) -| (naive_storage);
+        \draw [arrow] ($(naive_storage.east)-(0,0)$) -- ++(0.5,0) node(lowerright){} |- (calibration.east);
+        \draw [arrow] (calibration) -- (forecast_storage);
+        \draw [arrow] (forecast_storage) -- (result);
+    \end{tikzpicture}
+    \caption{Диаграмма потока данных алгоритма прогнозирования}\label{img:dataflowchartinit}
+\end{figure}
