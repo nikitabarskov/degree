@@ -1,6 +1,5 @@
 \tikzstyle{startstop} = [
-    rectangle, 
-    rounded corners, 
+    rounded rectangle,
     minimum width=4cm,
     minimum height=1cm,
     text centered,
@@ -33,21 +32,20 @@
     \centering
     \begin{tikzpicture}[font=\small]
     
-        \node [startstop] (start) {Инициализация алгоритма};
+        \node [startstop] (start) {Инициализация};
         \node [io, below of=start, yshift=-1cm] (logs) {Исходный протокол работы};
-        \node [process, below of=logs, yshift=-1cm, xshift=4cm] (sample) {Построение вероятностной выборки};
-        \node [process, below of=logs, yshift=-1cm, xshift=-4cm] (reports) {Построение статистики метрик};
-        \node [process, below of=logs, yshift=-3.25cm,] (naive) {Построение прогноза протокола работы};
-        \node [process, below of=naive, yshift=-1.25cm] (forecast) {Построение прогноза метрик};
+        \node [process, below of=logs, yshift=-1cm] (sample) {Построение вероятностной выборки};
+        \node [process, below of=sample, yshift=-1cm] (reports) {Построение статистики метрик};
+        \node [process, below of=reports, yshift=-1cm,] (naive) {Построение прогноза протокола работы};
+        \node [process, below of=naive, yshift=-1cm] (forecast) {Построение прогноза метрик};
         \node [process, below of=forecast, yshift=-1cm] (calib) {Калибровочный процесс};
-        \node [io, below of=calib, yshift=-1.5cm] (results) {Прогноз работы рекламной системы (пользовательских взаимодействий)};
-        \node [startstop, below of=results, yshift=-1.5cm] (end) {Конец работы алгоритма};
+        \node [io, below of=calib, yshift=-1cm] (results) {Прогноз пользовательских взаимодействий};
+        \node [startstop, below of=results, yshift=-1cm] (end) {Конец};
 
         \draw [arrow] (start) -- (logs);
-        \draw [arrow] (logs) -| (sample);
-        \draw [arrow] (logs) -| (reports);
-        \draw [arrow] (sample) |- (naive);
-        \draw [arrow] (reports) |- (naive);
+        \draw [arrow] (logs) -- (sample);
+        \draw [arrow] (sample) -- (reports);
+        \draw [arrow] (reports) -- (naive);
         \draw [arrow] (naive) -- (forecast);
         \draw [arrow] (forecast) -- (calib);
         \draw [arrow] (calib) -- (results);

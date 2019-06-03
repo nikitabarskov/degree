@@ -30,12 +30,12 @@
     minimum width=2cm, 
     minimum height=1cm,
     text centered, 
-    text width=1.75cm]
+    text width=2cm]
 \tikzstyle{process} = [
     draw,
     thick,
     circle,
-    minimum size=2cm,
+    minimum size=2.5cm,
     inner sep=1pt,
     fill=blue!20,
     text centered, 
@@ -45,11 +45,11 @@
     draw,
     very thick,
     shape=datastore,
-    inner sep=3pt,
-    minimum width=2cm, 
+    inner sep=1pt,
+    minimum width=2.5cm, 
     minimum height=1cm,
     text centered, 
-    text width=1.75cm]
+    text width=2cm]
 
 \begin{figure}[ht!]
     \centering
@@ -58,7 +58,7 @@
         \node (source_logs_storage) [
             datastore, 
             right of=source_data, 
-            xshift=1.5cm] {Хранилище протокола работы};
+            xshift=2cm] {Хранилище протокола работы};
         \node (sample_extract) [
             process, 
             right of=source_logs_storage, 

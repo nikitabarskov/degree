@@ -1,0 +1,590 @@
+\documentclass[handout]{beamer}
+\title{Прогнозирование взаимодействий пользователей с рекламными элементами интернет-страниц}
+\author{Студент Барсков Никита Максимович, гр. 6223-09.04.01D \\ Руководитель: Куликовских И.М., к.т.н., доцент кафедры ИСТ}
+\titlegraphic{\centering\includegraphics[width=0.6\textwidth]{inc/images/su.png}}
+\date{Самара, 2019}
+
+\usepackage{fontspec}
+\usetheme[block=fill]{metropolis}
+\setsansfont{Helvetica Neue}
+\setmonofont{Fira Code}
+
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{dateplot}
+\usepgfplotslibrary{fillbetween}
+\usepgfplotslibrary{statistics}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{fit}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes.misc}
+
+\usepackage{adjustbox}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/network_1_ts.csv} 
+    \networktimeseries{}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/network_1_ts_decompose.csv} 
+    \timeseriesdecompose{}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/uniques-10-days.csv} 
+    \uniquescumsumtendays{}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/fourier.csv} 
+    \fourierdataset{}
+
+\pgfplotstableread[
+    col sep=comma
+    ]{inc/csv/network.csv} 
+    \networkimpressions{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/eval-2019-02-28-1day.csv}
+        \fbteod{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-1day-naive.csv}
+        \fbteodmaenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-1day-calibrated.csv}
+        \fbteodmaecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-1day-naive.csv}
+        \fbteodmapenaive{}        
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-1day-calibrated.csv}
+        \fbteodmapecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/eval-2019-02-28-7days.csv}
+        \fbtesd{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-7days-naive.csv}
+        \fbtesdmaenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-7days-calibrated.csv}
+        \fbtesdmaecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-7days-naive.csv}
+        \fbtesdmapenaive{}        
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-7days-calibrated.csv}
+        \fbtesdmapecalibrated{}
+
+\pgfplotstableread[
+            col sep = comma
+            ]{inc/csv/eval-2019-02-28-3days.csv}
+            \fbtefd{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-3days-naive.csv}
+        \fbtefdmaenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mae-2019-02-28-3days-calibrated.csv}
+        \fbtefdmaecalibrated{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-3days-naive.csv}
+        \fbtefdmapenaive{}
+
+\pgfplotstableread[
+        col sep = comma
+        ]{inc/csv/mape-2019-02-28-3days-calibrated.csv}
+        \fbtefdmapecalibrated{}
+
+    \tikzstyle{entity} = [
+    rectangle,  
+    minimum width=3cm, 
+    minimum height=1cm,
+    font=\small,
+    text centered, 
+    text width=2.5cm,
+    draw=black,
+    fill=cyan!20]
+
+\tikzstyle{arrow} = [
+    thick,
+    ->]
+
+    \makeatletter
+    \pgfdeclareshape{datastore}{
+      \inheritsavedanchors[from=rectangle]
+      \inheritanchorborder[from=rectangle]
+      \inheritanchor[from=rectangle]{center}
+      \inheritanchor[from=rectangle]{base}
+      \inheritanchor[from=rectangle]{north}
+      \inheritanchor[from=rectangle]{north east}
+      \inheritanchor[from=rectangle]{east}
+      \inheritanchor[from=rectangle]{south east}
+      \inheritanchor[from=rectangle]{south}
+      \inheritanchor[from=rectangle]{south west}
+      \inheritanchor[from=rectangle]{west}
+      \inheritanchor[from=rectangle]{north west}
+      \backgroundpath{
+        \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+        \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+     }
+    }
+    \makeatother
+    \tikzstyle{source} = [
+        draw,
+        thick,
+        rounded corners,
+        fill=yellow!20,
+        minimum width=2cm, 
+        minimum height=1cm,
+        text centered, 
+        text width=2cm]
+    \tikzstyle{process} = [
+        draw,
+        thick,
+        circle,
+        minimum size=2.5cm,
+        inner sep=1pt,
+        fill=blue!20,
+        text centered, 
+        text width=2cm]
+    
+    \tikzstyle{datastore} = [
+        draw,
+        very thick,
+        shape=datastore,
+        inner sep=1pt,
+        minimum width=2.5cm, 
+        minimum height=1cm,
+        text centered, 
+        text width=2cm]
+\begin{document}
+\maketitle
+
+\begin{frame}
+    \frametitle{Цели работы}
+    Разработка алгоритма прогнозирования взаимодействий пользователей с рекламным содержимым интернет-страниц и оценка качества работы разработанного решения.\\
+\end{frame}
+
+\begin{frame}
+    \frametitle{Задачи работы}
+    \begin{itemize}
+        \item анализ процесса взаимодействия пользователей с рекламными элементами интернет-страниц; 
+        \item математическая постановка задачи прогнозирования; 
+        \item разработка алгоритма прогнозирования взаимодействий пользователей; 
+        \item программная реализация разработанного алгоритма; 
+        \item оценка качества работы разработанного алгоритма в сравнении с существующим методом наивного сезонного прогнозирования. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Актуальность работы}
+    \begin{itemize}
+        \item активное развитие индустрии онлайн рекламы требует появления новых алгоритмов, способствующих эволюции области;
+        \item применение современных математических моделей для решение поставленной задачи;
+        \item использование релевантных средств разработки алгоритмов и систем обработки данных.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Схема реализации рекламного содержимого}
+
+\begin{figure}[h!]
+        \centering
+        \resizebox{\columnwidth}{!}{%
+        \begin{tikzpicture}
+            \node (user_1) [entity] {Посетитель 1};
+            \node (user_2) [entity, below of=user_1, yshift=-0.5cm] {Посетитель 2};
+            \node (user_3) [entity, below of=user_2, yshift=-0.5cm] {Посетитель 3};
+            \node (page) [entity, right of=user_2, xshift=2.5cm] {Интернет страница с рекламным элементом};
+            \draw [arrow] (user_1) -| node[anchor=south, font=\small, text width=3cm] {Уведомление о показе рекламного места} (page);
+            \draw [arrow] (user_2) -- (page);
+            \draw [arrow] (user_3) -| (page);
+    
+            \node (ssp) [entity, right of=page, xshift=2.5cm] {SSP};
+                
+            \draw [arrow] (page) -- (ssp);
+                
+            \node (dsp_2) [entity, right of=ssp, xshift=2.5cm] {DSP 2};
+            \node (dsp_1) [entity, above of=dsp_2, yshift=0.5cm] {DSP 1};
+            \node (dsp_3) [entity, below of=dsp_2, yshift=-0.5cm] {DSP 3};
+    
+            \draw [arrow] (ssp) |- node[anchor=south, font=\small, text width=3cm] {Предоставление рекламного места для продажи} (dsp_1);
+            \draw [arrow] (ssp) -- (dsp_2);
+            \draw [arrow] (ssp) |- (dsp_3);
+    
+            \node (advertiser_1) [entity, right of=dsp_1, xshift=2.5cm, yshift=1cm] {Рекламодатель 1};
+            \node (advertiser_2) [entity, right of=dsp_2, xshift=2.5cm] {Рекламодатель 2};
+            \node (advertiser_3) [entity, right of=dsp_3, xshift=2.5cm, yshift=-1cm] {Рекламодатель 3};
+    
+            \draw [arrow] (dsp_1) |- node[anchor=south, font=\small, text width=3cm] {Запрос рекламного содержимого} (advertiser_1);
+            \draw [arrow] (dsp_2) -- (advertiser_2);
+            \draw [arrow] (dsp_3) |- (advertiser_3);
+        \end{tikzpicture}
+        }
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Протокол работы и анализ взаимодействий}
+    \begin{block}{Протокол работы}
+    Файл или совокупность файлов, в котором содержатся хронологический порядок
+    взаимодействий пользователей с рекламными элементами интернет-страниц и описание данных взаимодействий.
+    \end{block}
+    \begin{block}{Число взаимодействий}
+        Количество показов, переходов и иных взаимодействий пользователей с рекламным элементом.
+        \end{block}
+        \begin{block}{Число уникальных пользователей}
+            Число неповторяющихся пользователей, осуществивших взаимодействие с конкретным рекламным элементом интернет-страницы за определенный период времени.
+        \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Количественная оценка взаимодействий}
+    Каждое взаимодействие можно описать в виде
+    \begin{equation*}
+        \mathbf{U_i} = \left(t_k, u_1, \dots, u_n \right),
+        \; i = \overline{1, M},
+        \; n = \overline{1, N},
+        \; k = \overline{1, K},
+        \; u_n \in D_n,
+    \end{equation*}
+    тогда функция взаимодействия пользователя с рекламным элементом выглядит так
+    \begin{equation*}
+        \text{Imps} \left( U, A, t_k, \left\{ \mathbf{U} \right\} \right) =
+            \begin{cases}
+                1,\; u_i = U \wedge u_j = A  \\
+                0,\; u_i \neq U \vee u_j \neq A
+            \end{cases},
+            \; \forall t_k \in \left[ T_0, T_1 \right],
+        \label{eq:user-imps-definition}
+    \end{equation*}
+    а метрика числа уникальных пользователей
+    \begin{equation*}
+        \text{Distinct}\left( A, T_0, T_1, \left\{\mathbf{U}\right\} \right) =
+        \begin{cases}
+            \left|\left\{u_i\right\}\right|,\; u_j = A  \\
+            0,\; u_j \neq A
+        \end{cases}, \forall t_k \in \left[T_0, T_1\right],
+    \end{equation*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Количественная оценка взаимодействий}
+    \centering
+    \begin{figure}[ht!]
+        \resizebox{\columnwidth}{!}{%
+        \begin{tikzpicture}[font=\footnotesize]
+            \begin{axis}[
+                /pgf/number format/.cd,
+                    fixed,
+                    use comma,
+                /tikz/.cd,
+                date coordinates in=x,
+                width=\textwidth,
+                height=.4\textwidth,
+                xmin=2018-03-01,
+                xmax=2019-03-01,
+                xtick distance=90,
+                tick scale binop=\times,
+                xlabel=Дата,
+                ylabel style={align=center},
+                ylabel=Число\\взаимодействий]
+                \addplot+[no markers] table[x=date, y=impressions] {\networktimeseries};
+            \end{axis}
+        \end{tikzpicture}
+        }
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Алгоритм прогнозирования}
+    \tikzstyle{startstop} = [
+    rounded rectangle,
+    minimum width=4cm,
+    minimum height=1cm,
+    text centered,
+    text width=3.75cm,
+    draw=black, 
+    fill=red!20]
+
+\tikzstyle{io} = [
+    trapezium,
+    trapezium left angle=70, 
+    trapezium right angle=110, 
+    minimum width=4cm, 
+    minimum height=1cm, 
+    text centered, 
+    text width=3.75cm,
+    draw=black, 
+    fill=blue!20]
+
+\tikzstyle{process} = [
+    rectangle, 
+    minimum width=4cm,
+    minimum height=1cm, 
+    text centered,
+    text width=3.75cm,
+    draw=black, 
+    fill=yellow!20]
+
+\tikzstyle{arrow} = [
+        thick,
+        ->]
+\begin{columns}
+    \column{0.25\textwidth}
+    \begin{figure}[h!]
+        \centering
+        \begin{adjustbox}{width=0.9\textwidth}
+        \begin{tikzpicture}[font=\small]
+            \node [startstop] (start) {Инициализация};
+            \node [io, below of=start, yshift=-0.5cm] (logs) {Исходный протокол работы};
+            \node [process, below of=logs, yshift=-1cm] (sample) {Построение вероятностной выборки};
+            \node [process, below of=sample, yshift=-1cm] (reports) {Построение статистики метрик};
+            \node [process, below of=reports, yshift=-1cm,] (naive) {Построение прогноза протокола работы};
+            \node [process, below of=naive, yshift=-1cm] (forecast) {Построение прогноза метрик};
+            \node [process, below of=forecast, yshift=-1cm] (calib) {Калибровочный процесс};
+            \node [io, below of=calib, yshift=-1cm] (results) {Прогноз пользовательских взаимодействий};
+            \node [startstop, below of=results, yshift=-1cm] (end) {Конец};
+    
+            \draw [arrow] (start) -- (logs);
+            \draw [arrow] (logs) -- (sample);
+            \draw [arrow] (sample) -- (reports);
+            \draw [arrow] (reports) -- (naive);
+            \draw [arrow] (naive) -- (forecast);
+            \draw [arrow] (forecast) -- (calib);
+            \draw [arrow] (calib) -- (results);
+            \draw [arrow] (results) -- (end);
+        \end{tikzpicture}
+        \end{adjustbox}
+    \end{figure}
+    \column{0.75\textwidth}
+    \begin{itemize}
+        \item проведение вероятностной выборки взаимодействий и получение метрик; 
+        \item построение прогноза протокола работы рекламной системы и построение прогноза метрик; 
+        \item проведение калибровочного процесса для прогноза протокола работы рекламной системы и прогноза метрик.
+    \end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Алгоритм прогнозирования}
+    Для построения прогноза протокола работы воспользуемся методом наивного сезонного прогнозирования
+    \begin{equation*}
+        \hat{\mathbf{U}}_{\left.T+h\right|T} = \mathbf{U}_{T+h-(k+1)m}.
+    \end{equation*}
+    При построении прогнозов метрик воспользуемся определением прогнозирования одномерного временного ряда
+    \begin{equation*}
+        \hat{y}_{\left.T+h\right|T} = F\left(y_0, \dots, y_T\right),
+    \end{equation*}
+    и классической моделью декомпозиции для построения прогноза
+    \begin{equation*}
+        y(t) = g(t) + s(t) + h(t) + \varepsilon(t),
+    \end{equation*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Алгоритм прогнозирования}
+    Калибровочный процесс представляет собой решение матрицы
+    \begin{equation*}
+        \left(
+            \begin{array}{ccc}
+                \text{MIMPS}_{00} & \dots & \text{MIMPS}_{0L} \\
+                \vdots & \ddots & \vdots \\
+                \text{MIMPS}_{M0} & \dots & \text{MIMPS}_{ML} \\
+                \text{MDSTN}_{00} & \dots & \text{MDSTN}_{0L} \\
+                \vdots & \ddots & \vdots \\
+                \text{MDSTN}_{M0} & \dots & \text{MDSTN}_{ML} \\
+            \end{array}
+        \right)\times
+        \left(
+            \begin{array}{c}
+                \text{us}_{0} \\
+                \vdots \\
+                \vdots \\
+                \vdots \\
+                \vdots \\
+                \text{us}_{L}
+            \end{array}
+        \right) = 
+        \left(
+            \begin{array}{c}
+                \text{IMPS}_0 \\
+                \vdots \\
+                \text{IMPS}_M \\
+                \text{DSNT}_0 \\
+                \vdots \\
+                \text{DSNT}_M
+            \end{array}
+        \right).
+    \end{equation*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Реализация алгоритма}
+    
+
+\begin{figure}[ht!]
+    \centering
+    \resizebox{\columnwidth}{!}{%
+    \begin{tikzpicture}[font=\small]
+        \node (source_data) [source] {Протокол работы рекламной системы};
+        \node (source_logs_storage) [
+            datastore, 
+            right of=source_data, 
+            xshift=2cm] {Хранилище протокола работы};
+        \node (sample_extract) [
+            process, 
+            right of=source_logs_storage, 
+            xshift=1.5cm, 
+            yshift=2cm] {Проведение выборки};
+        \node (reports_extract) [
+            process, 
+            right of=source_logs_storage, 
+            xshift=1.5cm, 
+            yshift=-2cm] {Получение статистики метрик};
+        \node (sample_report_storage) [
+            datastore, 
+            right of=source_logs_storage, 
+            xshift=4cm] {Хранилище выборки и статистики метрик};
+        \node (naive_forecast) [
+            process, 
+            right of=sample_report_storage, 
+            xshift=1.75cm, 
+            yshift=3cm] {Построение прогноза протокола работы};
+        \node (forecast) [
+            process, 
+            right of=sample_report_storage, 
+            xshift=1.75cm, 
+            yshift=-3cm] {Построение прогноза метрик};
+        \node (naive_storage) [
+            datastore, 
+            right of=sample_report_storage, 
+            xshift=4cm] {Хранилище прогноза протокола работы и метрик};
+        \node (calibration) [
+            process, 
+            below of=naive_storage, 
+            yshift=-4.5cm] {Калибровка};
+        \node (forecast_storage) [
+            datastore, 
+            left of=calibration, 
+            xshift=-5cm] {Хранилище результатов калибровки};
+        \node (result) [
+            source, 
+            left of=forecast_storage, 
+            xshift=-5cm] {Итоговый прогноз протокола работы};
+        \draw [arrow] (source_data) -- (source_logs_storage);
+        \draw [arrow] (source_logs_storage)--($(source_logs_storage.east)-(0,0.5)$) -| (reports_extract);
+        \draw [arrow] (source_logs_storage)--($(source_logs_storage.east)-(0,-0.5)$) -| (sample_extract);
+        \draw [arrow] (reports_extract) -| (sample_report_storage);
+        \draw [arrow] (sample_extract) -| (sample_report_storage); 
+        \draw [arrow] (sample_report_storage)--($(sample_report_storage.east)-(0,-0.5)$) -| (naive_forecast);
+        \draw [arrow] (sample_report_storage)--($(sample_report_storage.east)-(0,0.5)$) -| (forecast);
+        \draw [arrow] (naive_forecast) -| (naive_storage);
+        \draw [arrow] (forecast) -| (naive_storage);
+        \draw [arrow] ($(naive_storage.east)-(0,0)$) -- ++(0.5,0) node(lowerright){} |- (calibration.east);
+        \draw [arrow] (calibration) -- (forecast_storage);
+        \draw [arrow] (forecast_storage) -- (result);
+    \end{tikzpicture}
+    }
+\end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Используемые технологии разработки}
+    \begin{block}{Основной язык программирования}
+        Python 3
+    \end{block}
+    \begin{block}{Библиотеки математического моделирования}
+        Facebook Prophet (для прогнозирования метрик), Scipy, Pandas, Numpy (для обработки данных и решения матрицы калибровки)
+    \end{block}
+    \begin{block}{Системы обработки больших данных}
+        Apache Hadoop, Apache Spark, Apache Mesos
+    \end{block} 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Описание исходных данных}
+    \begin{block}{Общее число взаимодействий}
+        $\approx 10^{9}$
+    \end{block}
+    \begin{block}{Хронологический период}
+        1 марта 2018 года -- 1 мая 2019 года
+    \end{block}
+    \begin{block}{Среднее число взаимодействий в день}
+        $\approx 10^{5}$
+    \end{block}
+    \begin{block}{Среднее число уникальных пользователей в день}
+        $\approx 10^{4}$
+    \end{block}
+    \begin{block}{Число уникальных рекламных элементов}
+        $1525$
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Описание исходных данных}
+    \begin{figure}[ht]
+        \centering
+        \begin{tikzpicture}[font=\small]
+            \begin{axis}[
+                /pgf/number format/.cd,
+                    fixed,
+                    use comma,
+                /tikz/.cd,
+                extra x ticks={1/7,1/3.5},
+                extra x tick style={
+                    grid=major,
+                    tick pos = right,
+                    ticklabel pos = right,
+                },
+                xmin=0,
+                xmax=0.5,
+                ymin=-0.1,
+                ylabel={Спектральная плотность $S$},
+                xlabel={Частота},
+                width=.8\textwidth,
+                tick scale binop=\times,
+                axis x line*=bottom,
+                axis y line*=left,
+                xlabel near ticks,
+                ylabel near ticks,]
+              \addplot+[ycomb, thick, mark=*] table [x=freq, y=value] {\fourierdataset};
+            \end{axis}
+        \end{tikzpicture}
+    \end{figure}
+\end{frame}
+
+\end{document}
